@@ -1,0 +1,365 @@
+:root{
+  --bg: #fff7f3;
+  --panel: linear-gradient(180deg,#ffeedd,#ffdfe8);
+  --card-width: 162px;
+  --card-height: 180px;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family: "Segoe UI", Roboto, "Noto Sans KR", Arial, sans-serif;
+  background: var(--bg);
+  color:#222;
+}
+
+.container{
+  max-width:1100px;
+  margin:0 auto;
+  padding:20px;
+  background: transparent;
+  border-radius:0;
+  box-shadow: none;
+  min-height: 100vh;
+  position: relative;
+}
+
+header{
+  display:flex;
+  gap:16px;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  transition: all 0.3s ease;
+}
+
+header.centered{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  flex-direction: column;
+  text-align: center;
+  width: 90%;
+  max-width: 500px;
+}
+
+header.centered h1{
+  font-size: 48px;
+  margin-bottom: 30px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+header.centered .controls{
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+header.centered .controls label{
+  font-size: 18px;
+  font-weight: 500;
+  color: #555;
+}
+
+header.centered .controls input[type="number"]{
+  width: 150px;
+  padding: 12px 16px;
+  font-size: 18px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  text-align: center;
+}
+
+header.centered .controls button{
+  padding: 16px 48px;
+  font-size: 18px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  transition: all 0.3s ease;
+}
+
+header.centered .controls button:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+header.centered .note{
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+h1{margin:0 0 8px 0;font-size:20px}
+
+.controls{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.controls input[type="number"]{
+  width:80px;
+  padding:6px 8px;
+  font-size:14px;
+}
+
+.controls button{
+  padding:8px 12px;
+  border-radius:6px;
+  border:0;
+  background:#6aa0ff;
+  color:white;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.note{margin:8px 0 0 0;color:#666;font-size:13px}
+
+/* 보드 */
+.board{
+  margin-top:20px;
+  display:grid;
+  gap:12px;
+  justify-content:center;
+  align-content:start;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.board.visible{
+  opacity: 1;
+}
+
+/* 카드 (3D flip) */
+.card {
+  width: var(--card-width);
+  height: var(--card-height);
+  perspective:1000px;
+}
+
+.card-inner{
+  position:relative;
+  width:100%;
+  height:100%;
+  transform-style:preserve-3d;
+  transition: transform 0.5s;
+  cursor:pointer;
+}
+
+/* flipped state */
+.card.is-flipped .card-inner{
+  transform: rotateY(180deg);
+  cursor: default;
+}
+
+/* face */
+.face{
+  position:absolute;
+  inset:0;
+  backface-visibility:hidden;
+  border-radius:8px;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  font-size:22px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+/* 뒷면: 학생 이미지 (초기) */
+.face.back{
+  background: #f7f7f7;
+  transform: rotateY(0deg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* 앞면: 성경 인물 (뒤집힌 면) */
+.face.front{
+  transform: rotateY(180deg);
+  background: white;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position:center;
+}
+
+/* front text overlay (if needed) */
+.front .label{
+  margin-top:8px;
+  padding:6px 10px;
+  background: rgba(255,255,255,0.85);
+  border-radius:6px;
+  font-size:20px;
+  color:#a15aa1;
+  font-weight:800;
+}
+
+/* hover effect (only when not flipped and not matched) */
+.card:not(.is-flipped):not(.matched) .card-inner:hover{
+  transform: translateY(-6px) rotateX(6deg) rotateY(0deg) scale(1.02);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+}
+
+/* matched */
+.card.matched .card-inner{
+  transform: rotateY(180deg) !important;
+  cursor: default;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+  outline: 4px solid rgba(144,238,144,0.5);
+}
+
+footer{margin-top:18px}
+#status{color:#444}
+
+/* 모달 */
+.modal{
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.show{
+  display: flex;
+}
+
+.modal-content{
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn{
+  from{
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to{
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-content h2{
+  font-size: 36px;
+  margin: 0 0 20px 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.modal-content p{
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.modal-content input{
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 18px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+.modal-buttons{
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.modal-buttons button{
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.modal-buttons button:first-child{
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.modal-buttons button:first-child:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.modal-buttons button:last-child{
+  background: #f0f0f0;
+  color: #333;
+}
+
+.modal-buttons button:last-child:hover{
+  background: #e0e0e0;
+}
+
+/* 순위 모달 */
+.rank-modal{
+  max-width: 600px;
+}
+
+#rankList{
+  max-height: 400px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.rank-item{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.rank-item.top3{
+  background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+  color: white;
+  font-weight: 600;
+}
+
+.rank-number{
+  font-size: 20px;
+  font-weight: 700;
+  min-width: 40px;
+}
+
+.rank-name{
+  flex: 1;
+  text-align: left;
+  margin: 0 16px;
+}
+
+.rank-time{
+  font-weight: 600;
+}
