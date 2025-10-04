@@ -135,7 +135,7 @@ h1{margin:0 0 8px 0;font-size:20px}
 
 .note{margin:8px 0 0 0;color:#666;font-size:13px}
 
-/* ë³´ë“œ */
+/* 보드 */
 .board{
   margin-top:20px;
   display:grid;
@@ -144,7 +144,7 @@ h1{margin:0 0 8px 0;font-size:20px}
   align-content:start;
 }
 
-/* ì¹´ë“œ (3D flip) */
+/* 카드 (3D flip) */
 .card {
   width: var(--dynamic-card-width, 162px);
   height: var(--dynamic-card-height, 180px);
@@ -181,18 +181,18 @@ h1{margin:0 0 8px 0;font-size:20px}
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
-/* ë’·ë©´: í•™ìƒ ì´ë¯¸ì§€ (ì´ˆê¸°) */
-/* ë’·ë©´: í•™ìƒ ì´ë¯¸ì§€ (ì´ˆê¸°) */
+/* 뒷면: 학생 이미지 (초기) */
+/* 뒷면: 학생 이미지 (초기) */
 .face.back{
   background: #f7f7f7;
   transform: rotateY(0deg);
   border: 8px solid rgba(255,255,255,0.9);
-  background-size: contain;        /* coverì—ì„œ containìœ¼ë¡œ ë³€ê²½ */
-  background-repeat: no-repeat;    /* ì´ ì¤„ ì¶”ê°€ */
+  background-size: contain;        /* cover에서 contain으로 변경 */
+  background-repeat: no-repeat;    /* 이 줄 추가 */
   background-position: center;
 }
 
-/* ì•žë©´: ì„±ê²½ ì¸ë¬¼ (ë’¤ì§‘ížŒ ë©´) */
+/* 앞면: 성경 인물 (뒤집힌 면) */
 .face.front{
   transform: rotateY(180deg);
   background: white;
@@ -200,8 +200,8 @@ h1{margin:0 0 8px 0;font-size:20px}
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  background-size: contain;        /* coverì—ì„œ containìœ¼ë¡œ ë³€ê²½ */
-  background-repeat: no-repeat;    /* ì´ ì¤„ ì¶”ê°€ */
+  background-size: contain;        /* cover에서 contain으로 변경 */
+  background-repeat: no-repeat;    /* 이 줄 추가 */
   background-position:center;
 }
 /* front text overlay (if needed) */
@@ -223,13 +223,13 @@ h1{margin:0 0 8px 0;font-size:20px}
 
 /* matched */
 .card.matched .card-inner{
-  transform: rotateY(180deg) !important;  /* noneì—ì„œ rotateY(180deg)ë¡œ ë³€ê²½ */
+  transform: rotateY(180deg) !important;  /* none에서 rotateY(180deg)로 변경 */
   cursor: default;
   box-shadow: 0 12px 28px rgba(0,0,0,0.12);
   outline: 4px solid #f00;
 }
 
-/* ë°˜ì‘í˜• ê·¸ë¦¬ë“œ: columnsì— ë”°ë¼ ìžë™ ë°°ì¹˜ */
+/* 반응형 그리드: columns에 따라 자동 배치 */
 /* @media(min-width:1000px){
   .board{ grid-template-columns: repeat(8, var(--card-width)); }
 }
@@ -243,8 +243,8 @@ h1{margin:0 0 8px 0;font-size:20px}
   .board{ grid-template-columns: repeat(2, var(--card-width)); }
 } */
 
-/* ë°˜ì‘í˜• ê·¸ë¦¬ë“œ: í™”ë©´ì— ë§žê²Œ ì¹´ë“œ í¬ê¸° ìžë™ ì¡°ì ˆ */
-/* ë³´ë“œ */
+/* 반응형 그리드: 화면에 맞게 카드 크기 자동 조절 */
+/* 보드 */
 /* .board{
   margin-top:20px;
   display:grid;
@@ -253,7 +253,7 @@ h1{margin:0 0 8px 0;font-size:20px}
   align-content:start;
 } */
 
-/* ë³´ë“œ */
+/* 보드 */
 .board{
   margin-top:20px;
   display:grid;
@@ -272,7 +272,7 @@ footer{margin-top:18px}
 #status{color:#444}
 
 
-/* ëª¨ë‹¬ */
+/* 모달 */
 .modal{
   display: none;
   position: fixed;
