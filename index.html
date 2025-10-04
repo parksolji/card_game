@@ -12,8 +12,9 @@
       <h1>📖 이름 카드 짝맞추기</h1>
       <div class="controls">
         <label for="cardCount">카드 수 (짝수, 최대 30장):</label>
-        <input id="cardCount" type="number" min="2" max="30" step="2" value="10" />
+        <input id="cardCount" type="number" min="2" max="30" step="2" value="20" />
         <button id="startBtn">게임 시작</button>
+        <button id="rankBtn" style="display:none; margin-left:8px;">🏆 순위 보기</button>
       </div>
     </header>
 
@@ -31,7 +32,23 @@
       <h2>🎉 축하합니다!</h2>
       <p>모든 카드를 맞추셨습니다!</p>
       <p id="finalTime" style="font-size:28px; font-weight:700; color:#667eea; margin:20px 0;"></p>
-      <button id="restartBtn">다시하기</button>
+      <input id="playerName" type="text" placeholder="이름을 입력하세요 (선택)" maxlength="20" style="width:100%; padding:12px; font-size:16px; border:2px solid #ddd; border-radius:8px; margin-bottom:15px; box-sizing:border-box;" />
+      <div style="display:flex; gap:10px; justify-content:center;">
+        <button id="saveRankBtn">순위 등록</button>
+        <button id="skipRankBtn" style="background:#888;">건너뛰기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 순위 모달 -->
+  <div id="rankModal" class="modal">
+    <div class="modal-content rank-modal">
+      <h2>🏆 순위표</h2>
+      <div id="rankList" style="max-height:400px; overflow-y:auto; margin:20px 0;"></div>
+      <div style="display:flex; gap:10px; justify-content:center;">
+        <button id="closeRankBtn">닫기</button>
+        <button id="clearRankBtn" style="background:#f44336; color:white;">전체 삭제</button>
+      </div>
     </div>
   </div>
 

@@ -344,3 +344,90 @@ footer{margin-top:18px}
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
 }
+
+/* 순위 모달 */
+.rank-modal{
+  max-width: 600px;
+}
+
+#rankList{
+  text-align: left;
+}
+
+.rank-item{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.rank-item.top1{
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  color: white;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.rank-item.top2{
+  background: linear-gradient(135deg, #C0C0C0 0%, #808080 100%);
+  color: white;
+  font-weight: 700;
+}
+
+.rank-item.top3{
+  background: linear-gradient(135deg, #CD7F32 0%, #8B4513 100%);
+  color: white;
+  font-weight: 700;
+}
+
+.rank-number{
+  font-size: 20px;
+  font-weight: 700;
+  min-width: 40px;
+}
+
+.rank-name{
+  flex: 1;
+  text-align: left;
+  margin: 0 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rank-time{
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.rank-cards{
+  font-size: 14px;
+  color: #666;
+  margin-left: 8px;
+}
+
+.rank-item.top1 .rank-cards,
+.rank-item.top2 .rank-cards,
+.rank-item.top3 .rank-cards{
+  color: rgba(255,255,255,0.8);
+}
+
+#skipRankBtn{
+  background: #888 !important;
+}
+
+#skipRankBtn:hover{
+  background: #666 !important;
+}
+
+#clearRankBtn{
+  background: #f44336 !important;
+}
+
+#clearRankBtn:hover{
+  background: #d32f2f !important;
+}
