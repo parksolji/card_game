@@ -1,40 +1,27 @@
-// script.js (최종 버전)
+// script.js (스톱워치 추가 버전)
 // cards 폴더에 1.jpg~45.jpg 있어야 합니다.
 // 1~30 : students (뒷면), 31~45 : bible (앞면)
 
 document.addEventListener("DOMContentLoaded", () => {
   const board = document.getElementById("board");
   const startBtn = document.getElementById("startBtn");
-  const rankBtn = document.getElementById("rankBtn");
   const cardCountInput = document.getElementById("cardCount");
   const status = document.getElementById("status");
   const timer = document.getElementById("timer");
   const header = document.querySelector("header");
   
   const completeModal = document.getElementById("completeModal");
-  const completeTime = document.getElementById("completeTime");
-  const playerName = document.getElementById("playerName");
-  const saveRankBtn = document.getElementById("saveRankBtn");
+  const finalTime = document.getElementById("finalTime");
   const restartBtn = document.getElementById("restartBtn");
-  
-  const rankModal = document.getElementById("rankModal");
-  const rankList = document.getElementById("rankList");
-  const closeRankBtn = document.getElementById("closeRankBtn");
-  const clearRankBtn = document.getElementById("clearRankBtn");
 
   let startTime;
   let timerInterval;
-  let currentCardCount;
 
   // 초기 화면은 중앙 배치
   header.classList.add("centered");
 
   startBtn.addEventListener("click", startGame);
-  rankBtn.addEventListener("click", showRankings);
-  saveRankBtn.addEventListener("click", saveRanking);
   restartBtn.addEventListener("click", restart);
-  closeRankBtn.addEventListener("click", () => rankModal.classList.remove("show"));
-  clearRankBtn.addEventListener("click", clearRankings);
 
   function startGame() {
     let count = parseInt(cardCountInput.value, 10);
@@ -53,11 +40,8 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    currentCardCount = count;
-    
     // 헤더를 원래 위치로
     header.classList.remove("centered");
-    rankBtn.style.display = "inline-block";
     
     // 타이머 시작
     startTime = Date.now();
@@ -71,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateTimer() {
     const elapsed = Date.now() - startTime;
     const seconds = (elapsed / 1000).toFixed(1);
-    timer.textContent = `시간: ${seconds}초`;
+    timer.textContent = `⏱️ ${seconds}초`;
   }
 
   function stopTimer() {
@@ -233,80 +217,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 게임 종료 체크
     if (cards.every(c => c.matched)) {
-      const finalTime = stopTimer();
+      const time = stopTimer();
+      timer.style.display = "none";
       status.textContent = "축하합니다! 모든 짝을 맞췄습니다 🎉";
       
       // 완료 모달 표시
       setTimeout(() => {
-        completeTime.textContent = `완료 시간: ${finalTime}초`;
+        finalTime.textContent = `⏱️ ${time}초`;
         completeModal.classList.add("show");
-        playerName.value = "";
-        playerName.focus();
       }, 500);
-    }
-  }
-
-  function saveRanking() {
-    const name = playerName.value.trim();
-    if (!name) {
-      alert("이름을 입력하세요!");
-      return;
-    }
-
-    const finalTime = parseFloat(completeTime.textContent.match(/[\d.]+/)[0]);
-    
-    // 로컬 스토리지에서 순위 가져오기
-    let rankings = JSON.parse(localStorage.getItem("rankings") || "[]");
-    
-    rankings.push({
-      name: name,
-      time: finalTime,
-      cards: currentCardCount,
-      date: new Date().toISOString()
-    });
-    
-    // 시간 순으로 정렬
-    rankings.sort((a, b) => a.time - b.time);
-    
-    // 상위 50개만 저장
-    rankings = rankings.slice(0, 50);
-    
-    localStorage.setItem("rankings", JSON.stringify(rankings));
-    
-    completeModal.classList.remove("show");
-    alert("순위가 등록되었습니다!");
-    showRankings();
-  }
-
-  function showRankings() {
-    const rankings = JSON.parse(localStorage.getItem("rankings") || "[]");
-    
-    if (rankings.length === 0) {
-      rankList.innerHTML = "<p style='color:#999; padding:40px;'>아직 등록된 순위가 없습니다.</p>";
-    } else {
-      rankList.innerHTML = rankings.map((rank, index) => `
-        <div class="rank-item ${index < 3 ? 'top3' : ''}">
-          <span class="rank-number">${index + 1}</span>
-          <span class="rank-name">${rank.name}</span>
-          <span class="rank-time">${rank.time}초 (${rank.cards}장)</span>
-        </div>
-      `).join('');
-    }
-    
-    rankModal.classList.add("show");
-  }
-
-  function clearRankings() {
-    if (confirm("정말 모든 순위를 삭제하시겠습니까?")) {
-      localStorage.removeItem("rankings");
-      showRankings();
     }
   }
 
   function restart() {
     completeModal.classList.remove("show");
     header.classList.add("centered");
-    rankBtn.style.display = "none";
     board.innerHTML = "";
     board.classList.remove("visible");
     timer.style.display = "none";

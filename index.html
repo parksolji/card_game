@@ -14,16 +14,14 @@
         <label for="cardCount">카드 수 (짝수, 최대 30장):</label>
         <input id="cardCount" type="number" min="2" max="30" step="2" value="20" />
         <button id="startBtn">게임 시작</button>
-        <button id="rankBtn" style="display:none;">순위 보기</button>
       </div>
-      <p class="note">학생 이미지: <code>cards/1.jpg</code> ~ <code>cards/30.jpg</code> / 성경 이미지: <code>cards/31.jpg</code> ~ <code>cards/45.jpg</code></p>
     </header>
 
     <section id="board" class="board"></section>
 
     <footer>
       <p id="status"></p>
-      <p id="timer" style="display:none; font-size:18px; font-weight:600; margin-top:10px;"></p>
+      <p id="timer" style="display:none; font-size:20px; font-weight:700; margin-top:10px; color:#667eea;"></p>
     </footer>
   </main>
 
@@ -31,24 +29,9 @@
   <div id="completeModal" class="modal">
     <div class="modal-content">
       <h2>🎉 축하합니다!</h2>
-      <p id="completeTime"></p>
-      <input id="playerName" type="text" placeholder="이름을 입력하세요" maxlength="20" />
-      <div class="modal-buttons">
-        <button id="saveRankBtn">순위 등록</button>
-        <button id="restartBtn">다시하기</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 순위 모달 -->
-  <div id="rankModal" class="modal">
-    <div class="modal-content rank-modal">
-      <h2>🏆 순위표</h2>
-      <div id="rankList"></div>
-      <div class="modal-buttons">
-        <button id="closeRankBtn">닫기</button>
-        <button id="clearRankBtn">순위 초기화</button>
-      </div>
+      <p>모든 카드를 맞추셨습니다!</p>
+      <p id="finalTime" style="font-size:28px; font-weight:700; color:#667eea; margin:20px 0;"></p>
+      <button id="restartBtn">다시하기</button>
     </div>
   </div>
 
