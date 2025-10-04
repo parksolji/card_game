@@ -102,13 +102,13 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // 최적의 열 개수 계산 (가로 최대 8, 딱 떨어지는 배치 우선)
+    // 최적의 열 개수 계산 (가로 최대 7, 딱 떨어지는 배치 우선)
     let cols;
-    if (count <= 8) {
-      cols = count; // 8장 이하는 한 줄
+    if (count <= 7) {
+      cols = count; // 7장 이하는 한 줄
     } else {
-      // 8부터 역순으로 확인하여 딱 떨어지는 배치 찾기
-      for (let c = 8; c >= 4; c--) {
+      // 7부터 역순으로 확인하여 딱 떨어지는 배치 찾기
+      for (let c = 7; c >= 4; c--) {
         if (count % c === 0) {
           cols = c;
           break;
@@ -116,11 +116,36 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       // 딱 떨어지지 않으면 가로를 길게
       if (!cols) {
-        cols = Math.min(8, Math.ceil(count / 3));
+        cols = Math.min(7, Math.ceil(count / 3));
       }
     }
 
-    board.style.gridTemplateColumns = `repeat(${cols}, var(--card-width))`;
+    // 행 개수 계산
+    const rows = Math.ceil(count / cols);
+    
+    // 화면 크기에 맞춰 카드 크기 자동 조절
+    const availableWidth = window.innerWidth - 100; // 양쪽 여백 고려
+    const availableHeight = window.innerHeight - 180; // 헤더, 푸터 고려 (250)
+    
+    const maxCardWidth = Math.floor(availableWidth / cols) - 12; // gap 고려
+    const maxCardHeight = Math.floor(availableHeight / rows) - 12;
+    
+    // 비율 유지 (9:10)
+    let cardWidth = maxCardWidth;
+    let cardHeight = Math.floor(cardWidth * 10 / 9);
+    
+    if (cardHeight > maxCardHeight) {
+      cardHeight = maxCardHeight;
+      cardWidth = Math.floor(cardHeight * 9 / 10);
+    }
+    
+    // 최소/최대 크기 제한
+    cardWidth = Math.max(100, Math.min(cardWidth, 290));  // 250
+    cardHeight = Math.max(110, Math.min(cardHeight, 300)); // 280
+
+    board.style.gridTemplateColumns = `repeat(${cols}, ${cardWidth}px)`;
+    board.style.setProperty('--dynamic-card-width', `${cardWidth}px`);
+    board.style.setProperty('--dynamic-card-height', `${cardHeight}px`);
 
     renderBoard(cards);
     
