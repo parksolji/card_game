@@ -263,7 +263,3 @@ document.addEventListener("DOMContentLoaded", () => {
     status.textContent = "";
   }
 });
-
-// script.js (스톱워치 추가 버전)
-// cards 폴더에 1.jpg~45.jpg 있어야 합니다.
-// 1~30 : students (뒷면), 31~45 : bible (앞면)
